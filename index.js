@@ -52,21 +52,29 @@ app.post('/', async function (req, res) {
     });
 
     // Read rows from spreadsheet
-
+    let year = rollNumber.slice(0, 4);
+    year = year.toUpperCase();
+    let lastCol = "";
+    if (year === "2K19") {
+        lastCol = "CD";
+    } else if (year === "2K20") {
+        lastCol = "AT"
+    }
     const getRows = await googleSheets.spreadsheets.values.get({
         auth,
         spreadsheetId,
-        range: "2K19!C6:C195",
+        range: year + "!C6:C1000",
     });
     const getRows1 = await googleSheets.spreadsheets.values.get({
         auth,
         spreadsheetId,
-        range: "2K19!CD6:CD195",
+        range: year + "!" + lastCol + "6:" + lastCol + "1000",
     });
 
     const rollNo = getRows.data.values;
+
     const studentId = rollNumber;
-    let index = 0;
+    let index = -1;
     for (let i = 0; i <= rollNo.length; i++) {
         if (rollNo[i][0] === studentId) {
             console.log("Found");
@@ -76,7 +84,14 @@ app.post('/', async function (req, res) {
         }
     }
     const hours = getRows1.data.values;
-    console.log(hours[index][0]);
+    if (index != -1) {
+        console.log(hours[index][0]);
+        return res.redirect('back');
+    } else {
+        console.log("not found");
+        return res.redirect('back');
+    }
+
 
 });
 
