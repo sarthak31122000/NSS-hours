@@ -60,11 +60,28 @@ app.post('/', async function (req, res) {
     } else if (year === "2K20") {
         lastCol = "AT"
     }
+    // through this i got the last column number
+     const getRows2 = await googleSheets.spreadsheets.values.get({
+        auth,
+        spreadsheetId,
+        range: year + "!1:1",
+    });
+
+   const range=getRows2.data.values;
+//    this is the last column number
+   const maxColumnNumber=range[0].length;
+   console.log(maxColumnNumber);
+   
+
+
+
+
     const getRows = await googleSheets.spreadsheets.values.get({
         auth,
         spreadsheetId,
         range: year + "!C6:C1000",
     });
+
     const getRows1 = await googleSheets.spreadsheets.values.get({
         auth,
         spreadsheetId,
@@ -84,6 +101,9 @@ app.post('/', async function (req, res) {
         }
     }
     const hours = getRows1.data.values;
+ 
+
+
     if (index != -1) {
         console.log(hours[index][0]);
         return res.redirect('back');
