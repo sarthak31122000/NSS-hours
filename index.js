@@ -54,12 +54,7 @@ app.post('/', async function (req, res) {
     // Read rows from spreadsheet
     let year = rollNumber.slice(0, 4);
     year = year.toUpperCase();
-    let lastCol = "";
-    if (year === "2K19") {
-        lastCol = "CD";
-    } else if (year === "2K20") {
-        lastCol = "AT"
-    }
+   
     // through this i got the last column number
      const getRows2 = await googleSheets.spreadsheets.values.get({
         auth,
