@@ -71,10 +71,23 @@ app.post('/', async function (req, res) {
 //    this is the last column number
    const maxColumnNumber=range[0].length;
    console.log(maxColumnNumber);
+
+   function lastCol1(ColumnNumber){
+       let string="";
+       while(ColumnNumber>0){
+           let b=(ColumnNumber-1)%26;
+           let ch=String.fromCharCode(b + 65);
+           string=ch+string;
+           ColumnNumber=(ColumnNumber-1)/26;
+       }
+       return string;
+   }
+// var res=String.fromCharCode(65+23);
+//      console.log(res);
+    let ans=lastCol1(maxColumnNumber);
+    ans=ans.slice(1);
+    // console.log(ans);
    
-
-
-
 
     const getRows = await googleSheets.spreadsheets.values.get({
         auth,
@@ -85,7 +98,7 @@ app.post('/', async function (req, res) {
     const getRows1 = await googleSheets.spreadsheets.values.get({
         auth,
         spreadsheetId,
-        range: year + "!" + lastCol + "6:" + lastCol + "1000",
+        range: year + "!" + ans + "6:" + ans + "1000",
     });
 
     const rollNo = getRows.data.values;
