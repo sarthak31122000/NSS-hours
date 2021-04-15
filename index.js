@@ -33,7 +33,7 @@ app.post('/', async function (req, res) {
         keyFile: "credentials.json",
         scopes: "https://www.googleapis.com/auth/spreadsheets",
     });
-
+    
     // Create client instance for auth
     const client = await auth.getClient();
 
@@ -54,7 +54,7 @@ app.post('/', async function (req, res) {
     // Read rows from spreadsheet
     let year = rollNumber.slice(0, 4);
     year = year.toUpperCase();
-   
+    
     // through this i got the last column number
      const getRows2 = await googleSheets.spreadsheets.values.get({
         auth,
@@ -101,6 +101,7 @@ app.post('/', async function (req, res) {
     const studentId = rollNumber;
     let index = -1;
     for (let i = 0; i <= rollNo.length; i++) {
+        if(rollNo[i]==undefined) break;
         if (rollNo[i][0] === studentId) {
             console.log("Found");
             console.log("Number of Hours worked");

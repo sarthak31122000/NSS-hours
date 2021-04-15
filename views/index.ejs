@@ -10,7 +10,7 @@
 
 <body>
     <h1>NSS Hours</h1>
-
+    <h3><i>Format: 2K19/MCE/003</i></h3>
 
     <form action="/" method="POST">
         <div class="name">
@@ -20,7 +20,7 @@
 
         <div class="roll-no">
             <label for="student-password">Roll No</label>
-            <input type="text" id="student-password" name="rollNumber">
+            <input type="text" id="student-password" name="rollNumber" pattern="^2K(19|2\d).[A-Z]{2,3}.[0-9]{3}" required>
         </div>
         <button type="submit">Hours</button>
     </form>
